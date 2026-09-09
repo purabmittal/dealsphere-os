@@ -1,0 +1,55 @@
+import {
+  LayoutDashboard,
+  Users,
+  Handshake,
+  Building2,
+  ClipboardList,
+  CheckSquare,
+  Calendar,
+  MessageSquare,
+  Smartphone,
+  Megaphone,
+  Briefcase,
+  UserCog,
+  Wallet,
+  Receipt,
+  FileText,
+  FolderOpen,
+  Target,
+  BarChart3,
+  Ticket,
+  BookOpen,
+  Sparkles,
+  Settings,
+  type LucideIcon,
+} from 'lucide-react';
+
+const ICONS: Record<string, LucideIcon> = {
+  LayoutDashboard,
+  Users,
+  Handshake,
+  Building2,
+  ClipboardList,
+  CheckSquare,
+  Calendar,
+  MessageSquare,
+  Smartphone,
+  Megaphone,
+  Briefcase,
+  UserCog,
+  Wallet,
+  Receipt,
+  FileText,
+  FolderOpen,
+  Target,
+  BarChart3,
+  Ticket,
+  BookOpen,
+  Sparkles,
+  Settings,
+};
+
+export function NavIcon({ name, className }: { name: string; className?: string }) {
+  const Icon = ICONS[name] ?? LayoutDashboard;
+  return <Icon className={className} strokeWidth={1.75} />;
+}
