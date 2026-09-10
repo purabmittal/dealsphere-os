@@ -66,7 +66,11 @@ function MemberRow({ member }: { member: Member }) {
             <button
               type="button"
               disabled={isPending}
-              onClick={() => startTransition(() => removeRole(member.id, role))}
+              onClick={() =>
+                startTransition(() => {
+                  removeRole(member.id, role);
+                })
+              }
               className="text-accent/60 hover:text-accent"
               aria-label={`Remove ${role} from ${member.full_name}`}
             >
