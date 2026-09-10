@@ -13,7 +13,7 @@ export default async function DashboardPage() {
     supabase.from('user_roles').select('role').eq('organization_id', user.organizationId),
   ]);
 
-  const roleCounts = (roleBreakdown ?? []).reduce<Record<string, number>>((acc, r) => {
+  const roleCounts = ((roleBreakdown ?? []) as { role: string }[]).reduce<Record<string, number>>((acc, r) => {
     acc[r.role] = (acc[r.role] ?? 0) + 1;
     return acc;
   }, {});
