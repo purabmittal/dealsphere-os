@@ -2,16 +2,11 @@ import { createClient } from '@/lib/supabase/server';
 import { NAV_GROUPS, type NavGroup } from '@/lib/database/navigation';
 import type { AppRole } from '@/types/database.types';
 
-/**
- * Filters NAV_GROUPS down to items the current user actually has VIEW on.
- * Runs a single query for all of the user's roles' VIEW grants rather than
- * one RPC call per nav item, since the sidebar renders on every page.
- */
 export async function getVisibleNavGroups(roles: AppRole[]): Promise<NavGroup[]> {
   const supabase = createClient();
 
   if (roles.includes('SUPER_ADMIN') || roles.includes('ADMIN')) {
-    return NAV_GROUPS; // admins see everything, matching auth_has_permission()
+    return NAV_GROUPS;
   }
 
   const { data: grants } = await supabase
@@ -20,7 +15,8 @@ export async function getVisibleNavGroups(roles: AppRole[]): Promise<NavGroup[]>
     .in('role', roles)
     .contains('permissions', ['VIEW']);
 
-  const viewableModules = new Set((grants ?? []).map((g) => g.module));
+  const typedGrants = (grants ?? []) as { module: string; permissions: string[] }[];
+  const viewableModules = new Set(typedGrants.map((g) => g.module));
 
   return NAV_GROUPS.map((group) => ({
     ...group,

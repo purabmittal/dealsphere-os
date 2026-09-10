@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { requirePermission, PermissionError } from '@/lib/permissions';
 import { createClient } from '@/lib/supabase/server';
 import { TeamRoleManager } from '@/components/dashboard/team-role-manager';
+import type { AppRole } from '@/types/database.types';
 
 export default async function TeamSettingsPage() {
   try {
@@ -20,9 +21,12 @@ export default async function TeamSettingsPage() {
 
   const { data: roleRows } = await supabase.from('user_roles').select('profile_id, role');
 
-  const members = (profiles ?? []).map((p) => ({
+  const typedProfiles = (profiles ?? []) as { id: string; full_name: string; email: string; is_active: boolean }[];
+  const typedRoleRows = (roleRows ?? []) as { profile_id: string; role: AppRole }[];
+
+  const members = typedProfiles.map((p) => ({
     ...p,
-    roles: (roleRows ?? []).filter((r) => r.profile_id === p.id).map((r) => r.role),
+    roles: typedRoleRows.filter((r) => r.profile_id === p.id).map((r) => r.role),
   }));
 
   return (

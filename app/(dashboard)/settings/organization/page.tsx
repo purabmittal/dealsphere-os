@@ -19,13 +19,15 @@ export default async function OrganizationSettingsPage() {
     .eq('id', actor.organizationId)
     .single();
 
-  if (!org) redirect('/dashboard');
+  const typedOrg = org as { name: string; currency: string; timezone: string } | null;
+
+  if (!typedOrg) redirect('/dashboard');
 
   return (
     <div className="mx-auto max-w-md">
       <h1 className="text-xl font-semibold text-ink-900">Organization</h1>
       <p className="mt-1 text-sm text-ink-500">These settings apply across your whole workspace.</p>
-      <OrganizationForm initial={org} />
+      <OrganizationForm initial={typedOrg} />
     </div>
   );
 }

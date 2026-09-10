@@ -8,9 +8,6 @@ import { Topbar } from '@/components/dashboard/topbar';
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
 
-  // Belt-and-braces: middleware already redirects unauthenticated requests,
-  // this catches the case of a valid session with no profile row yet
-  // (e.g. the auth trigger failed) rather than rendering a broken shell.
   if (!user) {
     redirect('/login');
   }
@@ -22,7 +19,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="flex min-h-screen bg-surface">
-      <Sidebar groups={navGroups} orgName={org.data?.name ?? 'DealSphere OS'} />
+      <Sidebar groups={navGroups} orgName={(org.data as { name: string } | null)?.name ?? 'DealSphere OS'} />
       <div className="flex min-h-screen flex-1 flex-col">
         <Topbar user={user} />
         <main className="flex-1 p-4 md:p-6">{children}</main>
