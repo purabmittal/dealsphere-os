@@ -1,7 +1,8 @@
 'use client';
 
 import { useFormState } from 'react-dom';
-import { createDeal, type ActionState } from '@/lib/database/deals-actions';
+import { createDeal } from '@/lib/database/deals-actions';
+import type { ActionState } from '@/lib/database/crm-actions';
 import { FormField } from '@/components/ui/form-field';
 import { SubmitButton } from '@/components/ui/submit-button';
 
