@@ -24,7 +24,7 @@ export default async function DealsPage() {
     supabase.from('companies').select('id, name').order('name'),
   ]);
 
-  const typedDeals = (deals ?? []) as {
+  const typedDeals = (deals ?? []) as unknown as {
     id: string;
     title: string;
     value: number | null;

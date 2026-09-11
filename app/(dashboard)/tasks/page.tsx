@@ -21,7 +21,7 @@ export default async function TasksPage() {
     supabase.from('projects').select('id, name'),
   ]);
 
-  const typedTasks = (tasks ?? []) as {
+  const typedTasks = (tasks ?? []) as unknown as {
     id: string;
     title: string;
     status: string;

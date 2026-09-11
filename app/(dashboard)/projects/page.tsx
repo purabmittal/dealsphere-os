@@ -20,7 +20,7 @@ export default async function ProjectsPage() {
     supabase.from('clients').select('id, companies(name)'),
   ]);
 
-  const typedProjects = (projects ?? []) as {
+  const typedProjects = (projects ?? []) as unknown as {
     id: string;
     name: string;
     status: string;
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
     deadline: string | null;
     clients: { companies: { name: string } | null } | null;
   }[];
-  const typedClients = (clients ?? []) as { id: string; companies: { name: string } | null }[];
+  const typedClients = (clients ?? []) as unknown as { id: string; companies: { name: string } | null }[];
 
   const healthColor: Record<string, string> = {
     ON_TRACK: 'bg-success/10 text-success',

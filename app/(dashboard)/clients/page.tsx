@@ -16,7 +16,7 @@ export default async function ClientsPage() {
     .select('id, status, created_at, companies(name)')
     .order('created_at', { ascending: false });
 
-  const typedClients = (clients ?? []) as {
+  const typedClients = (clients ?? []) as unknown as {
     id: string;
     status: string;
     created_at: string;
